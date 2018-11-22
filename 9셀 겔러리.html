@@ -68,7 +68,8 @@ function init(){
 
 	createMap();
 	createImg();
-	setInterval("move()",40);
+	setInterval("move()",50);
+	setInterval("randomTarget()",2200);
 }
 function createMap(){
 	var n=0;
@@ -105,6 +106,12 @@ function createImg(){
 
 		box.appendChild(img);
 	}
+}
+
+function randomTarget(){
+	var index=parseInt(Math.random()*imgPath.length);
+	targetX=pos[index][0];
+	targetY=pos[index][1];
 }
 
 function setTarget(index){
