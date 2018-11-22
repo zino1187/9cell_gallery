@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Document</title>
+<style>
+select{
+	width:200px;
+	height:50px;
+	font-size:30px;
+
+	background:dodgerblue;
+	color:#fff;
+}
+</style>
+<script>
+var topCategory=["상의","하의", "액세서리"];
+
+var subCategory=[
+	["티셔츠","니트","가디건","점퍼"],
+	["반바지","면바지","청바지","핫바지"],
+	["귀걸이","반지","목걸이","팔찌"]
+];
+var sel_top, sel_sub;
+
+function init(){
+	sel_top=document.getElementById("sel_top");
+	sel_sub=document.getElementById("sel_sub");
+
+	createTop();
+
+	sel_top.addEventListener("change",function(){
+		createSub(this.selectedIndex);
+	});
+}
+
+function createTop(){
+	for(var i=0;i<topCategory.length;i++){
+		var op=document.createElement("option");
+		op.text=topCategory[i];
+		sel_top.add(op);
+	}
+}
+
+function createSub(index){
+	//기존의 option은 지워야 한다 
+	var len=subCategory[index].length;
+
+	for(var i=0;i<len;i++){
+		sel_sub.remove(0);
+	}
+
+	for(var i=0;i<subCategory[index].length;i++){
+		var op=document.createElement("option");
+		op.text=subCategory[index][i];
+		sel_sub.add(op);
+	}
+}
+addEventListener("load", function(){
+	init();
+});
+</script>
+</head>
+<body>
+	<select id="sel_top"></select>
+	<select id="sel_sub"></select>
+</body>
+</html>
+
