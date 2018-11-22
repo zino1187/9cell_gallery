@@ -1,0 +1,138 @@
+	<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Document</title>
+<style>
+.wrapper{
+	width:750px;
+	height:600px;
+	margin:auto;
+	background:pink;
+}
+
+.controller{
+	width:150px;
+	height:100%;
+	position:relative;
+	float:left;
+	background:blue;
+}
+
+.content{
+	width:600px;
+	height:100%;
+	background:#000;
+	float:left;
+}
+
+.mask{
+	width:200px;
+	height:200px;
+	background:yellow;
+	position:relative;
+	left:200px;
+	top:200px;
+	overflow:hidden;
+}
+#box{
+	width:600px;
+	height:600px;
+	background:green;
+	position:absolute;
+	left:0px;
+	top:0px;
+}
+
+</style>
+<script>
+var map;
+var box;
+var imgPath=["bear.jpg","cosmos.jpg","diver.jpg","fish.jpg","fox.jpg","lion.jpg","mouse.jpg","sunset.jpg","turtle.jpg"];
+var targetX=0;
+var targetY=0;
+var a=0.1;
+
+var pos=[
+	[0,0],[-200,0],[-400,0],
+	[0,-200],[-200,-200],[-400,-200],
+	[0,-400],[-200,-400],[-400,-400]
+];
+
+function init(){
+	map=document.getElementById("map");
+	box=document.getElementById("box");
+	box.style.position="absolute";
+	box.style.left=0+"px";
+	box.style.top=0+"px";
+
+	createMap();
+	createImg();
+	setInterval("move()",40);
+}
+function createMap(){
+	var n=0;
+
+	for(var a=0;a<3;a++){
+		for(var i=0;i<3;i++){
+			var div=document.createElement("div");		
+			div.style.width=30+"px";
+			div.style.height=30+"px";
+			div.style.border="1px solid blue";
+			div.style.position="absolute";
+			div.style.top=50+(30*a)+"px";
+			div.style.left=20+(30*i)+"px";
+			div.style.background="yellow";
+			div.innerText=a+","+i;
+			div.id=n;
+
+			div.addEventListener("mouseover",function(){
+				setTarget(this.id);
+			});
+
+			map.appendChild(div);
+			n++;
+		}
+	}
+}
+
+function createImg(){
+	for(var i=0;i<imgPath.length;i++){
+		var img=document.createElement("img");	
+		img.src="../res/geo/"+imgPath[i];
+		img.style.width=200+"px";
+		img.style.height=200+"px";
+
+		box.appendChild(img);
+	}
+}
+
+function setTarget(index){
+	targetX=pos[index][0];
+	targetY=pos[index][1];
+	console.log(targetX, targetY);
+}
+
+function move(){
+	box.style.left=parseFloat(box.style.left)+a*(targetX-parseFloat(box.style.left))+"px";
+	box.style.top=parseFloat(box.style.top)+a*(targetY-parseFloat(box.style.top))+"px";
+}
+
+addEventListener("load", function(){
+	init();
+});
+</script>
+</head>
+<body>
+<div class="wrapper">
+	<div class="controller">
+		<div id="map"></div>
+	</div>
+	<div class="content">
+		<div class="mask">
+			<div id="box"></div>
+		</div>
+	</div>
+</div>
+</body>
+</html>
